@@ -40,4 +40,17 @@ class GroupRepository
 
         return $stmt->fetch();
     }
+
+    public function findByName(string $groupName): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM rule_groups WHERE group_name = ?"
+        );
+
+        $stmt->execute([$groupName]);
+
+        $group = $stmt->fetch();
+
+        return $group ?: null;
+    }
 }

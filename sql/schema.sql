@@ -24,7 +24,7 @@ CREATE TABLE rules (
 
 CREATE TABLE rule_groups (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(100) NOT NULL,
+    group_name VARCHAR(100) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

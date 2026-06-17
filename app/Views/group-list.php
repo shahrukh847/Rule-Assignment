@@ -11,6 +11,13 @@
 
 <div class="container mt-4">
 
+    <?php if (!empty($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
     <h1>Groups</h1>
 
     <a href="index.php?action=create-form"  class="btn btn-primary mb-3" >

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../Repositories/GroupRepository.php';
 require_once __DIR__ . '/../Repositories/RuleRepository.php';
 require_once __DIR__ . '/../Repositories/AssignmentRepository.php';
 require_once __DIR__ . '/../Services/TreeBuilder.php';
+require_once __DIR__ . '/../Services/GroupService.php';
 
 class GroupController
 {
@@ -12,13 +13,21 @@ class GroupController
     private RuleRepository $ruleRepo;
     private AssignmentRepository $assignmentRepo;
     private RuleAssignmentService $assignmentService;
+    private GroupService $groupService;
 
-    public function __construct()
+    public function __construct(
+        ?GroupRepository $groupRepo = null,
+        ?RuleRepository $ruleRepo = null,
+        ?AssignmentRepository $assignmentRepo = null,
+        ?RuleAssignmentService $assignmentService = null,
+        ?GroupService $groupService = null
+    )
     {
-        $this->groupRepo = new GroupRepository();
-        $this->ruleRepo = new RuleRepository();
-        $this->assignmentRepo = new AssignmentRepository();
-        $this->assignmentService = new RuleAssignmentService();
+        $this->groupRepo = $groupRepo ?? new GroupRepository();
+        $this->ruleRepo = $ruleRepo ?? new RuleRepository();
+        $this->assignmentRepo = $assignmentRepo ?? new AssignmentRepository();
+        $this->assignmentService = $assignmentService ?? new RuleAssignmentService();
+        $this->groupService = $groupService ?? new GroupService();
     }
 
     /**
@@ -54,9 +63,9 @@ class GroupController
                 );
             }
 
-            $groupId = $this->groupRepo->create(
-                $groupName
-            );
+            $groupId = $this->groupService->createGroup($groupName);
+
+            $_SESSION['success'] = 'Group created successfully.';            
 
             header(
                 "Location: index.php?action=edit&id={$groupId}"
@@ -65,7 +74,10 @@ class GroupController
 
         } catch (Exception $e) {
 
-            echo $e->getMessage();
+            $_SESSION['error'] = $e->getMessage();
+
+            header('Location: index.php');
+            exit;
         }
     }
 
