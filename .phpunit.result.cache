@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"RuleAssignmentServiceTest::testSaveGroupReturnsTrue":0.009,"RuleAssignmentServiceTest::testServiceObjectCreated":0.001,"RuleAssignmentServiceTest::testValidateConditionRulesMethodExists":0,"RuleAssignmentServiceTest::testRemoveRuleMethodExists":0}}
